@@ -1,5 +1,7 @@
 //comes with nodejs
 const http = require('http')
+const process = require('process')
+
 const { 
     getProducts, 
     getProduct,
