@@ -8,6 +8,10 @@ const {
     removeProduct,
 } = require('./controllers/productControllers')
 
+function matchURL(url) {
+    return url.match(/\/api\/products\/([0-9]+)/)
+}
+
 const server = http.createServer((req, res) => {
     /*
     Manual way of doing things
@@ -32,15 +36,15 @@ const server = http.createServer((req, res) => {
     // create a better router if possible
     if (req.url === '/api/products' && req.method === 'GET') {
         getProducts(req, res)
-    } else if (req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'GET') {
+    } else if (matchURL(req.url) && req.method === 'GET') {
         const id = req.url.split('/')[3] // gets the id from api/products/{id}
         getProduct(req, res, id)
     } else if (req.url === '/api/products' && req.method === 'POST') {
         createProduct(req, res)
-    } else if (req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'PUT') {
+    } else if (matchURL(req.url) && req.method === 'PUT') {
         const id = req.url.split('/')[3] // gets the id from api/products/{id}
         updateProduct(req, res, id)
-    } else if (req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'DELETE') {
+    } else if (matchURL(req.url) && req.method === 'DELETE') {
         const id = req.url.split('/')[3] // gets the id from api/products/{id}
         removeProduct(req, res, id)
     }else {
